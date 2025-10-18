@@ -1,60 +1,63 @@
--- This is a cheatsheet for learning sql. It shall be updated regularly. This is helpful for almost everyone who are working with mysql. Please provide feedbacks. It really means a lot.
+-- This is a cheatsheet for learning SQL. It shall be updated regularly. This is helpful for almost everyone who are working with MySQL. 
+-- Please provide feedbacks. It really means a lot. If you find this helpful, please share it with peole you know.
+-- This cheatsheet contains queries with direct application. This shows their practical usage on a typical relation.
 
 -- Creating a database:
-create database course;
+CREATE DATABASE course;
 
 -- Selecting the database:
-use course;
+USE course;
 
 -- Creating a table:
-create table studentdata(
-	roll_no int primary key,
-    name varchar(50) not null default 'unknown',
-    marks int not null default 50
-    );
+CREATE TABLE studentdata (
+	roll_no INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL DEFAULT 'unknown',
+    marks INT NOT NULL DEFAULT 50
+);
+
 -- Selecting data:
-select * from studentdata;
+SELECT * FROM studentdata;
 
-/* To drop data:
-drop database course;
-*/ 
+-- To drop data:
+DROP DATABASE course; 
 
--- renaming the table;
-rename table studentdata to students;
-select * from students;
+-- Renaming the table:
+RENAME TABLE studentdata TO students;
+SELECT * FROM students;
 
 -- Altering table:
 -- Add a column:
-alter table students add gender enum('Male', 'Female', 'Others');   
-desc students;
+ALTER TABLE students ADD gender ENUM('Male', 'Female', 'Others');   
+DESC students;
 
 -- Modifying a column:
-alter table students modify gender varchar(50);
+ALTER TABLE students MODIFY gender VARCHAR(50);
 
 -- Dropping a column:
-alter table students drop gender varchar(50);
+ALTER TABLE students DROP gender;
 
 -- Rearranging the columns:
-alter table students modify roll_no int after name;
-alter table students modify roll_no int first;
+ALTER TABLE students MODIFY roll_no INT AFTER name;
+ALTER TABLE students MODIFY roll_no INT FIRST;
 
--- inserting data
-insert into students values (1, 'a', 54), (2, 'b', 65);
-insert into students (roll_no, name) values (3, 'c'); -- column specific
+-- Inserting data:
+INSERT INTO students VALUES (1, 'a', 54), (2, 'b', 65);
+INSERT INTO students (roll_no, name) VALUES (3, 'c'); -- Column specific
 
--- updating data
-update students set marks = 64 where roll_no = 3;
-update students set marks = 75, name = 'abhay' where roll_no = 1; -- update multiple columns
+-- Updating data:
+UPDATE students SET marks = 64 WHERE roll_no = 3;
+UPDATE students SET marks = 75, name = 'abhay' WHERE roll_no = 1; -- Update multiple columns
 
--- Deleting data
-delete from students where roll_no = 3;
+-- Deleting data:
+DELETE FROM students WHERE roll_no = 3;
 
--- Drop the table/database
-drop table students;
-drop database course;
+-- Drop the table/database:
+DROP TABLE students;
+DROP DATABASE course;
 
+-- Made with love and passion!
 -- Add a constraint:
-alter table students add constraint unique_name unique(name); -- unique_name is the constraint's name
+ALTER TABLE students ADD CONSTRAINT unique_name UNIQUE(name); -- unique_name is the constraint's name
 
 -- Add check constraint:
-alter table students add constraint chk_dob check(dob > '2007-01-01');
+ALTER TABLE students ADD CONSTRAINT chk_dob CHECK(dob > '2007-01-01');
