@@ -116,3 +116,77 @@ ROLLBACK;
 COMMIT;
 
 -- Note: DDL commands are an exception.
+
+-- Foreign keys: It is a column to reference/map with another table.
+CREATE TABLE classes (
+    class_id INT AUTO_INCREMENT PRIMARY KEY,
+    subject VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE students(
+    roll_no INT PRIMARY KEY AUTO_INCREMENT,
+    student_name VARCHAR(25),
+    class_id INT,
+    FOREIGN KEY (class_id) REFERENCES classes(class_id)
+    ON UPDATE CASCADE
+    ON DELETE SET NULL
+);
+
+-- Here,
+-- ON UPDATE CASCADE: automatically updates students.class_id if classes.class_id is updated.
+-- ON DELETE SET NULL: sets the value to null in students.class_id if rows from classes.class_id is deleted.
+
+
+-- Inner join: Includes all the values which are present in both the table.
+SELECT * FROM students s INNER JOIN classes c ON s.class_id=c.class_id; 
+
+-- Left Join: Includes all the records from the left table
+SELECT s.roll_no, s.student_name, c.subject FROM students s LEFT JOIN classes c ON s.class_id = c.class_id;
+
+-- Right join: Includes all the records from the right table
+SELECT s.roll_no, s.student_name, c.subject FROM students s RIGHT JOIN classes c ON s.class_id = c.class_id;
+
+-- Cross join: Matches students table's row with every row in classes table.
+SELECT s.roll_no, s.student_name, c.subject FROM students s CROSS JOIN classes c ORDER BY s.roll_no;
+
+
+-- Union: Concatenates two select queries. It has two condtions:
+-- 1. The no.of selected columns should be same.
+-- 2. The data type and data type's position of columns should be same.
+CREATE TABLE student_2022(
+    name VARCHAR(2),
+    subject VARCHAR(50)
+);
+
+CREATE TABLE student_2023(
+    name VARCHAR(2),
+    subject VARCHAR(50)
+);
+
+INSERT INTO student_2022 VALUE('a', 'maths'), ('b', 'english'), ('c', 'spanish');
+INSERT INTO student_2023 VALUE('d', 'french'), ('b', 'english'), ('f', 'science');
+
+SELECT * FROM student_2022
+UNION 
+SELECT * FROM student_2023;
+
+-- Note: Here b will be shown only once since duplicates are shown only once. If you wanna show it in the orginal way, you can use union all;
+SELECT * FROM student_2022
+UNION ALL
+SELECT * FROM student_2023;
+
+
+-- Views: It is the result of a select query which is saved as a new table. However, it doesn't occupy seperate storage. Also, it directly uses the original table's data.
+CREATE VIEW std AS 
+SELECT * FROM student_2022
+UNION
+SELECT * FROM student_2023;
+
+-- Updating a view:
+CREATE OR REPLACE VIEW std AS
+SELECT * FROM student_2022
+UNION ALL
+SELECT * FROM student_2023;
+
+-- Dropping a view:
+DROP VIEW std;
