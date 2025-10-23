@@ -190,3 +190,27 @@ SELECT * FROM student_2023;
 
 -- Dropping a view:
 DROP VIEW std;
+
+
+-- Indexes: It's just like an index in a book. It creates quick lookups for column(s).
+-- It should be created when the column(s) is being frequently used in WHERE, JOIN, and ORDER BY clauses.
+CREATE INDEX ord ON students(roll_no);
+
+-- Show existing index:
+show INDEX FROM students;
+
+-- However, it should never be created when the table is either:
+-- 1. Being frequently updated/inserted
+-- 2. Very short
+-- 3. The column(s) doesn't have a lot of unique values.
+-- 4. The column(s) is used in filtering rarely.
+
+-- To drop an index:
+DROP INDEX ord ON students;
+
+
+-- Subquery: A query inside a query. It is used to perform complex calculations and filtering.
+SELECT * FROM employees WHERE salary > (SELECT AVG(salary) FROM employees);
+
+-- Correlated subquery:
+SELECT * FROM employees e WHERE salary > (SELECT AVG(salary) FROM employees WHERE department = e.department);
