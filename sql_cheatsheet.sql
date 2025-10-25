@@ -214,3 +214,19 @@ SELECT * FROM employees WHERE salary > (SELECT AVG(salary) FROM employees);
 
 -- Correlated subquery:
 SELECT * FROM employees e WHERE salary > (SELECT AVG(salary) FROM employees WHERE department = e.department);
+
+
+-- Stored procedure: It's like a user defined function in mysql.
+-- In order to create a stored procedure, first we need to change the delimiter. We do this so that the commands inside procedure don't get executed directly.
+DELIMITER //
+CREATE PROCEDURE student_data(IN id VARCHAR(50))
+BEGIN
+    SELECT * FROM students WHERE roll_no = id;
+END //
+DELIMITER ;
+
+-- calling a procedure
+CALL student_data(2);
+
+-- Drop a stored procedure
+DROP PROCEDURE IF EXISTS student_data;
