@@ -17,7 +17,7 @@ It loads housing data, performs preprocessing, trains a model, and saves both th
   - `output.csv` — predictions  
 - Automatically switches to *inference mode* when the model already exists
 
-## 🚀 How It Works
+## How It Works
 
 ### **1. Training Mode (first run)**  
 Triggered when `model.pkl` does **not** exist.
